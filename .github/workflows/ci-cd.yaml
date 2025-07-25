@@ -71,10 +71,11 @@ jobs:
 
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
         args: >
           -Dsonar.projectKey=abdellahomari87_flask-ci-cd
           -Dsonar.organization=abdellahomari87
           -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
