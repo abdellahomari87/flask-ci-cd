@@ -60,13 +60,15 @@ jobs:
         trivy image --exit-code 0 --severity HIGH,CRITICAL flask-ci-cd
 
     - name: Download HTML report template
-      run: wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -O $GITHUB_WORKSPACE/trivy-html.tpl
+      run: |
+        wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
+        mv html.tpl trivy-html.tpl
 
     - name: Run Trivy scan and generate HTML report
       run: |
         trivy fs --severity HIGH,CRITICAL \
           --format template \
-          --template "@/github/workspace/trivy-html.tpl" \
+          --template "trivy-html.tpl" \
           -o trivy-report.html .
         
   docker:
