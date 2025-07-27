@@ -100,22 +100,23 @@ jobs:
 
       - name: Download OWASP Dependency-Check
         run: |
-          curl -L https://github.com/jeremylong/DependencyCheck/releases/download/v9.2.0/dependency-check-9.2.0-release.zip -o dependency-check.zip
-          unzip dependency-check.zip -d dependency-check
+          wget https://github.com/jeremylong/DependencyCheck/releases/download/v9.2.0/dependency-check-9.2.0-release.zip
+          unzip dependency-check-9.2.0-release.zip
+          mv dependency-check dependency-check-dir
 
       - name: Run OWASP Dependency-Check
         run: |
           mkdir -p owasp-reports
-          ./dependency-check/bin/dependency-check.sh \
+          ./dependency-check-dir/bin/dependency-check.sh \
           --project "flask-ci-cd" \
           --scan . \
           --format HTML \
           --out owasp-reports
 
-      - name: Upload OWASP Report
+      - name: Upload OWASP HTML Report
         uses: actions/upload-artifact@v4
         with:
-          name: owasp-report
+          name: owasp-dependency-report
           path: owasp-reports/dependency-check-report.html
       
   docker:
