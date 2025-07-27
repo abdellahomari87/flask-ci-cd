@@ -107,13 +107,12 @@ jobs:
       - name: Run OWASP Dependency-Check
         run: |
           mkdir -p owasp-reports
-          ./dependency-check-dir/bin/dependency-check.sh \
+          java -DdependencyCheck.nvd.api.key=${{ secrets.NVD_API_KEY }} \
+          -jar dependency-check-dir/bin/dependency-check.jar \
           --project "flask-ci-cd" \
           --scan . \
           --format HTML \
           --out owasp-reports
-        env:
-          dependencyCheck.nvd.api.key: ${{ secrets.NVD_API_KEY }}
 
       - name: Upload OWASP HTML Report
         uses: actions/upload-artifact@v4
