@@ -112,6 +112,7 @@ jobs:
           --scan . \
           --format HTML \
           --out owasp-reports
+          --nvdApiKey "${{ secrets.NVD_API_KEY }}"
 
       - name: Upload OWASP HTML Report
         uses: actions/upload-artifact@v4
