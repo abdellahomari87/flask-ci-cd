@@ -61,8 +61,7 @@ jobs:
 
     - name: Download HTML report template
       run: |
-        wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
-        mv html.tpl trivy-html.tpl
+        curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -o trivy-html.tpl
 
     - name: Run Trivy scan and generate HTML report
       run: |
@@ -72,7 +71,7 @@ jobs:
           -o trivy-report.html .
 
     - name: Upload Trivy HTML report as artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: trivy-report
         path: trivy-report.html
