@@ -71,6 +71,10 @@ jobs:
           --template "@trivy-html.tpl" \
           -o trivy-report.html
 
+    - name: Trivy Scan (table output)
+      run: |
+        trivy fs . --severity HIGH,CRITICAL
+
     - name: Upload Trivy HTML Report
       uses: actions/upload-artifact@v4
       with:
