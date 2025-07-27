@@ -63,15 +63,16 @@ jobs:
       run: |
         curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -o trivy-html.tpl
 
-    - name: Run Trivy scan and generate HTML report
+    - name: Trivy Scan (HTML)
       run: |
-        trivy fs --severity HIGH,CRITICAL \
+        trivy fs . \
+          --severity HIGH,CRITICAL \
           --format template \
-          --template "trivy-html.tpl" \
-          -o trivy-report.html .
+          --template "@trivy-html.tpl" \
+          -o trivy-report.html
 
-    - name: Upload Trivy HTML report as artifact
-      uses: actions/upload-artifact@v4
+    - name: Upload Trivy HTML Report
+      uses: actions/upload-artifact@v3
       with:
         name: trivy-report
         path: trivy-report.html
