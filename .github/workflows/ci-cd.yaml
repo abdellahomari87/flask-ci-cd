@@ -63,17 +63,19 @@ jobs:
       run: |
         curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -o trivy-html.tpl
 
-    - name: Trivy Scan (HTML)
+    - name: Vérification que le template existe
+      run: ls -l trivy-html.tpl
+
+    - name: Build Docker image
+      run: docker build -t flask-ci-cd .
+  
+    - name: Trivy Image Scan with HTML report
       run: |
-        trivy fs . \
+        trivy image flask-ci-cd \
           --severity HIGH,CRITICAL \
           --format template \
           --template "@trivy-html.tpl" \
           -o trivy-report.html
-
-    - name: Trivy Scan (table output)
-      run: |
-        trivy fs . --severity HIGH,CRITICAL
 
     - name: Upload Trivy HTML Report
       uses: actions/upload-artifact@v4
