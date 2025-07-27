@@ -105,6 +105,8 @@ jobs:
           mv dependency-check dependency-check-dir
 
       - name: Run OWASP Dependency-Check
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
           mkdir -p owasp-reports
           ./dependency-check-dir/bin/dependency-check.sh \
@@ -112,7 +114,6 @@ jobs:
           --scan . \
           --format HTML \
           --out owasp-reports
-          --nvdApiKey "${{ secrets.NVD_API_KEY }}"
 
       - name: Upload OWASP HTML Report
         uses: actions/upload-artifact@v4
