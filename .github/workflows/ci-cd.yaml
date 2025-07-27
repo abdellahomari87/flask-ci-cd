@@ -83,10 +83,13 @@ jobs:
         name: trivy-report
         path: trivy-report.html
 
-  owasp:
-      name: OWASP Dependency-Check
+  owasp-dependency-check:
+      name: OWASP Dependency Check
       runs-on: ubuntu-latest
       needs: build-and-test
+
+      env:
+        NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
 
       steps:
       - name: Checkout code
@@ -105,8 +108,6 @@ jobs:
           mv dependency-check dependency-check-dir
 
       - name: Run OWASP Dependency-Check
-        env:
-          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
           mkdir -p owasp-reports
           ./dependency-check-dir/bin/dependency-check.sh \
