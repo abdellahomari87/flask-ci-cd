@@ -108,7 +108,7 @@ jobs:
         run: |
           mkdir -p owasp-reports
           java -DdependencyCheck.nvd.api.key=${{ secrets.NVD_API_KEY }} \
-          -jar dependency-check-dir/bin/dependency-check.jar \
+          -jar dependency-check-dir/dependency-check.jar \
           --project "flask-ci-cd" \
           --scan . \
           --format HTML \
