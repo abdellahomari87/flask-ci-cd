@@ -113,7 +113,7 @@ jobs:
           --format HTML \
           --out owasp-reports
         env:
-          API Key: ${{ secrets.NVD_API_KEY }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
           echo "Using NVD API key: ${API_KEY:0:5}****"
 
       - name: Upload OWASP HTML Report
