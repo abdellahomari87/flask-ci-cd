@@ -59,7 +59,7 @@ jobs:
             --out owasp-reports
 
       - name: Upload OWASP HTML Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: owasp-report
           path: owasp-reports
