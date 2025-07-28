@@ -46,7 +46,7 @@ jobs:
         run: |
           wget https://github.com/jeremylong/DependencyCheck/releases/download/v9.2.0/dependency-check-9.2.0-release.zip
           unzip dependency-check-9.2.0-release.zip
-          mv dependency-check-9.2.0 dependency-check-dir
+          mv dependency-check dependency-check-dir
 
       - name: Run OWASP Dependency-Check
         run: |
