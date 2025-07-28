@@ -53,14 +53,19 @@ jobs:
           sudo apt-get install -y rpm
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
 
-      - name: Trivy Docker Image Scan
+      - name: Récupérer le template HTML de Trivy
+        run: |
+          git clone --depth 1 https://github.com/aquasecurity/trivy.git
+          cp trivy/contrib/html.tpl ./html.tpl
+
+      - name: Scan Docker image avec Trivy
         run: |
           mkdir -p trivy-reports
           trivy image $IMAGE_NAME:latest \
             --format template \
-            --template "@contrib/html.tpl" \
+            --template "@html.tpl" \
             -o trivy-reports/trivy-report.html
-            
+         
       - name: Upload Trivy Report
         uses: actions/upload-artifact@v4
         with:
