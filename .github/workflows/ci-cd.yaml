@@ -48,10 +48,13 @@ jobs:
           unzip dependency-check-9.2.0-release.zip
           mv dependency-check dependency-check-dir
 
+      - name: Make dependency-check.sh executable
+        run: chmod +x dependency-check-dir/bin/dependency-check.sh
+
       - name: Run OWASP Dependency-Check
         run: |
           mkdir -p owasp-reports
-          java -jar dependency-check-dir/lib/dependency-check-cli-9.2.0.jar \
+          dependency-check-dir/bin/dependency-check.sh \
             --nvdApiKey "${{ secrets.NVD_API_KEY }}" \
             --project "flask-ci-cd" \
             --scan . \
