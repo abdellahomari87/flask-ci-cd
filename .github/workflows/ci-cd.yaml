@@ -56,8 +56,11 @@ jobs:
       - name: Trivy Docker Image Scan
         run: |
           mkdir -p trivy-reports
-          trivy image $IMAGE_NAME:latest --format html -o trivy-reports/trivy-report.html
-
+          trivy image $IMAGE_NAME:latest \
+            --format template \
+            --template "@contrib/html.tpl" \
+            -o trivy-reports/trivy-report.html
+            
       - name: Upload Trivy Report
         uses: actions/upload-artifact@v4
         with:
