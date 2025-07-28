@@ -102,19 +102,22 @@ jobs:
         run: |
           wget https://github.com/jeremylong/DependencyCheck/releases/download/v9.2.0/dependency-check-9.2.0-release.zip
           unzip dependency-check-9.2.0-release.zip
-          mv dependency-check dependency-check-dir
+          mv dependency-check-9.2.0 dependency-check-dir
 
       - name: Run OWASP Dependency-Check
         run: |
           mkdir -p owasp-reports
-          ./dependency-check-dir/bin/dependency-check.sh \
-          --project "flask-ci-cd" \
-          --scan . \
-          --format HTML \
-          --out owasp-reports
-        env:
-          JAVA_OPTS: "-DdependencyCheck.nvd.api.key=${{ secrets.NVD_API_KEY }}"
+          java -DdependencyCheck.nvd.api.key=${{ secrets.NVD_API_KEY }} \
+            -jar dependency-check-dir/dependency-check.jar \
+            --project "flask-ci-cd" \
+            --scan . \
+            --format HTML \
+            --out owasp-reports
 
+      - name: Debug – Affiche si clé présente
+        run: echo "Key is set"
+        if: ${{ secrets.NVD_API_KEY != '' }}
+       
       - name: Upload OWASP HTML Report
         uses: actions/upload-artifact@v4
         with:
