@@ -51,7 +51,7 @@ jobs:
       - name: Run OWASP Dependency-Check
         run: |
           mkdir -p owasp-reports
-          java -cp "dependency-check-dir/lib/*:dependency-check-dir" org.owasp.dependencycheck.cli.Main \
+          java -jar dependency-check-dir/lib/dependency-check-cli-9.2.0.jar \
             --nvdApiKey "${{ secrets.NVD_API_KEY }}" \
             --project "flask-ci-cd" \
             --scan . \
