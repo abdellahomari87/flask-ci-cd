@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-ci-cd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-ci-cd
+  template:
+    metadata:
+      labels:
+        app: flask-ci-cd
+    spec:
+      containers:
+      - name: flask-app
+        image: docker.io/omari87/flask-ci-cd:latest
+        ports:
+        - containerPort: 5000
