@@ -1,8 +1,0 @@
-grafana:
-  adminPassword: "admin"
-  service:
-    type: LoadBalancer
-
-prometheus:
-  service:
-    type: LoadBalancer
