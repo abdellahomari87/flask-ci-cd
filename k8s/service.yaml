@@ -11,3 +11,7 @@ spec:
   ports:
     - port: 80
       targetPort: 5000
+  ports:
+  - name: http     # ← ce nom est utilisé dans le ServiceMonitor
+    port: 80
+    targetPort: 5000
