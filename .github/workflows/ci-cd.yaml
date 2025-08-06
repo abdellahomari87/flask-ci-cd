@@ -37,7 +37,8 @@ jobs:
         run: |
           pip install coverage
           coverage run --source=. -m unittest discover -s tests
-          coverage html
+          coverage report
+          coverage html -d coverage_report
     
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
@@ -61,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coverage.html
+          path: coverage_report/
 
       - name: Install Trivy
         run: |
