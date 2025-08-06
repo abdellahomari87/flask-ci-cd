@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flask
+      app: flask-ci-cd
   template:
     metadata:
       labels:
-        app: flask
+        app: flask-ci-cd
     spec:
       automountServiceAccountToken: false
       containers:
