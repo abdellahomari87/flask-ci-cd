@@ -38,6 +38,7 @@ jobs:
           pip install coverage
           coverage run --source=. -m unittest discover -s tests
           coverage report
+          coverage xml
           coverage html -d coverage_report
     
       - name: SonarCloud Scan
