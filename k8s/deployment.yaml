@@ -1,26 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-ci-cd
+  name: flask-deployment
+  labels:
+    app: flask
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flask-ci-cd
+      app: flask
   template:
     metadata:
       labels:
-        app: flask-ci-cd
+        app: flask
     spec:
       containers:
-      - name: flask-app
-        image: docker.io/omari87/flask-ci-cd:latest
-        ports:
-        - containerPort: 5000
-  resources:
-  requests:
-    memory: "64Mi"
-    cpu: "250m"
-  limits:
-    memory: "128Mi"
-    cpu: "500m"
+        - name: flask-container
+          image: omari87/flask-ci-cd:latest
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
