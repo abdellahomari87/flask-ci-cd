@@ -28,6 +28,7 @@
 
     - name: Run Trivy image scan
       shell: |
+        mkdir -p trivy-reports
         trivy image omari87/flask-ci-cd:latest \
           --format template \
           --template "@html.tpl" \
