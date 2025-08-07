@@ -5,8 +5,8 @@
 
   vars:
     sonar_token: "{{ lookup('env', 'SONAR_TOKEN') }}"
-    project_key: "omari87_flask-ci-cd"
-    organization: "omari87"
+    project_key: "abdellahomari87_flask-ci-cd"
+    organization: "abdellahomari87"
     sonar_host_url: "https://sonarcloud.io"
 
   tasks:
