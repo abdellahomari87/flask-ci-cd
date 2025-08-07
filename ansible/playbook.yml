@@ -1,0 +1,15 @@
+- name: Deploy Flask app to EKS
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Apply Deployment
+      kubernetes.core.k8s:
+        kubeconfig: ~/.kube/config
+        state: present
+        definition: "{{ lookup('file', '../k8s/deployment.yaml') }}"
+
+    - name: Apply Service
+      kubernetes.core.k8s:
+        kubeconfig: ~/.kube/config
+        state: present
+        definition: "{{ lookup('file', '../k8s/service.yaml') }}"
