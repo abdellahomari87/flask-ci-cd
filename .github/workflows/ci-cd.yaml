@@ -1,4 +1,4 @@
-name: CI Pipeline with SonarCloud, Trivy & DockerHub
+name: CI Pipeline with SonarCloud, Trivy via Ansible & DockerHub
 
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
           coverage report
           coverage xml
           coverage html -d coverage_report
-    
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
@@ -65,30 +65,20 @@ jobs:
           name: coverage-report
           path: coverage_report/
 
-      - name: Install Trivy
+      - name: Install Ansible
         run: |
-          sudo apt-get install -y rpm
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+          sudo apt update && sudo apt install -y ansible
 
-      - name: Récupérer le template HTML de Trivy
+      - name: Run Trivy scan with Ansible
         run: |
-          git clone --depth 1 https://github.com/aquasecurity/trivy.git
-          cp trivy/contrib/html.tpl ./html.tpl
+          ansible-playbook ansible/playbooks/trivy.yml -i ansible/inventory/localhost
 
-      - name: Scan Docker image avec Trivy
-        run: |
-          mkdir -p trivy-reports
-          trivy image $IMAGE_NAME:latest \
-            --format template \
-            --template "@html.tpl" \
-            -o trivy-reports/trivy-report.html
-         
       - name: Upload Trivy Report
         uses: actions/upload-artifact@v4
         with:
           name: trivy-report
           path: trivy-reports/trivy-report.html
-          
+
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
