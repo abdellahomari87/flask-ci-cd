@@ -41,12 +41,17 @@ jobs:
           coverage xml
           coverage html -d coverage_report
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          projectBaseDir: .
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Install Ansible
+        run: |
+          sudo apt update && sudo apt install -y ansible
+
+      - name: Install Ansible + unzip + Java (for SonarScanner)
+        run: |
+          sudo apt update && sudo apt install -y ansible unzip default-jre
+
+      - name: Run SonarCloud scan with Ansible
+        run: |
+          ansible-playbook ansible/playbooks/sonarcloud.yml -i ansible/inventory/localhost
 
       - name: Log in to DockerHub
         run: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
@@ -63,15 +68,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coverage_report/
-
-      - name: Install Ansible
-        run: |
-          sudo apt update && sudo apt install -y ansible
-
-      - name: Install Ansible + unzip + Java (for SonarScanner)
-        run: |
-          sudo apt update && sudo apt install -y ansible unzip default-jre
+          path: coverage_report/ 
 
       - name: Run Trivy scan with Ansible
         run: |
