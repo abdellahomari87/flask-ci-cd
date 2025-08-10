@@ -2,12 +2,9 @@ name: Terraform Security (Checkov)
 
 on:
   push:
-    branches: [ "main" ]
-    paths:
-      - "eks-cluster-modular/**"
+    branches: [ "main" ]   # ajuste si tu utilises une autre branche par défaut
   pull_request:
-    paths:
-      - "eks-cluster-modular/**"
+  workflow_dispatch:        # permet de lancer manuellement depuis l'onglet Actions
 
 permissions:
   contents: read
